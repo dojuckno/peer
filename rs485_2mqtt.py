@@ -4,8 +4,8 @@ from json import dumps as json_dumps
 from functools import reduce
 from collections import defaultdict
 
-MQTT_USERNAME = 'SHOULD_BE_CHANGED'
-MQTT_PASSWORD = 'SHOULD_BE_CHANGED'
+MQTT_USERNAME = 'dojuckno'
+MQTT_PASSWORD = 'za8153275!'
 
 class Device:
     def __init__(self, device_name, device_id, device_subid, device_class, child_device, mqtt_discovery, optional_info):
@@ -148,7 +148,7 @@ class Wallpad:
     def on_disconnect(self, client, userdata, rc):
         raise ConnectionError
 
-MQTT_SERVER = '192.168.1.1'
+MQTT_SERVER = '172.30.1.16'
 ROOT_TOPIC_NAME = 'rs485_2mqtt'
 HOMEASSISTANT_ROOT_TOPIC_NAME = 'homeassistant'
 wallpad = Wallpad()
@@ -171,14 +171,16 @@ optional_info = {'optimistic': 'false', 'speed_range_min': 1, 'speed_range_max':
 전열교환기.register_command(message_flag = '42', attr_name = 'percentage',  topic_class = 'percentage_command_topic', process_func = lambda v: {payload: packet for packet, payload in packet_2_payload_percentage.items()}[v])
 전열교환기.register_command(message_flag = '43', attr_name = 'heat',        topic_class = 'oscillation_command_topic', process_func = lambda v: {payload: packet for packet, payload in packet_2_payload_oscillation.items()}[v])
 
-### 가스차단기 ###
-optional_info = {'optimistic': 'false'}
-가스 = wallpad.add_device(device_name = '가스', device_id = '12', device_subid = '01', device_class = 'switch', optional_info = optional_info)
-가스.register_status(message_flag = '01', attr_name = 'availability', topic_class ='availability_topic', regex = r'()', process_func = lambda v: 'online')
-가스.register_status(message_flag = '81', attr_name = 'power', topic_class ='state_topic', regex = r'00(0[12])', process_func = lambda v: 'ON' if v == '01' else 'OFF')
-가스.register_status(message_flag = 'c1', attr_name = 'power', topic_class ='state_topic', regex = r'00(0[12])', process_func = lambda v: 'ON' if v == '01' else 'OFF')
 
-가스.register_command(message_flag = '41', attr_name = 'power', topic_class = 'command_topic', process_func = lambda v: '01' if v == 'ON' else '00')
+### 가스차단기 ###
+#optional_info = {'optimistic': 'false'}
+#가스 = wallpad.add_device(device_name = '가스', device_id = '12', device_subid = '01', device_class = 'switch', optional_info = optional_info)
+#가스.register_status(message_flag = '01', attr_name = 'availability', topic_class ='availability_topic', regex = r'()', process_func = lambda v: 'online')
+#가스.register_status(message_flag = '81', attr_name = 'power', topic_class ='state_topic', regex = r'00(0[12])', process_func = lambda v: 'ON' if v == '01' else 'OFF')
+#가스.register_status(message_flag = 'c1', attr_name = 'power', topic_class ='state_topic', regex = r'00(0[12])', process_func = lambda v: 'ON' if v == '01' else 'OFF')
+
+#가스.register_command(message_flag = '41', attr_name = 'power', topic_class = 'command_topic', process_func = lambda v: '01' if v == 'ON' else '00')
+
 
 ### 조명 ###
 optional_info = {'optimistic': 'false'}
